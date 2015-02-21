@@ -1,18 +1,13 @@
 package com.yanickouellet.carpooling;
 
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,19 +26,20 @@ public class MainActivity extends RoboActionBarActivity implements
     private @InjectResource(R.array.app_menu) String[] mMenuTitles;
     private @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     private @InjectView(R.id.left_drawer) ListView mDrawerList;
+    private @InjectView(R.id.toolbar) Toolbar mToolbar;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setLogo(R.drawable.ic_drawer);
+        setSupportActionBar(mToolbar);
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
-
                 mDrawerLayout,
+                mToolbar,
                 R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
