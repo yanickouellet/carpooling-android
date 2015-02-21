@@ -11,5 +11,13 @@
     <string name="save">Sauvegarder</string>
     <string name="profile_name">Nom</string>
     <string name="profile_title">Profile</string>
+    <string name="drawer_open">Menu ouvert</string>
+    <string name="drawer_close">Menu fermé</string>
+
+    <string-array name="app_menu">
+        <item>Profile</item>
+        <item>Faire une demande</item>
+        <item>Proposer un parcours</item>
+    </string-array>
 
 </resources>
