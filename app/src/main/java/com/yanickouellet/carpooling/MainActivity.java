@@ -24,9 +24,7 @@ public class MainActivity extends RoboActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ProfileFragment())
-                    .commit();
+            LoadProfileFragment();
         }
     }
 
@@ -50,5 +48,16 @@ public class MainActivity extends RoboActionBarActivity implements
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void LoadProfileFragment() {
+        LoadFragment(new ProfileFragment());
+    }
+
+    private void LoadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null) //TODO Not do that on load
+                .commit();
     }
 }

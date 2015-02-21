@@ -28,6 +28,7 @@ public class ProfileFragment extends RoboFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        activity.setTitle(getString(R.string.profile_title));
         try {
             mListener = (ProfileFragmentListener) activity;
         } catch (ClassCastException e) {
