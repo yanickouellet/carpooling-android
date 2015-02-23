@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
-public class RequestFormFragment extends RoboFragment {
+public class RequestFormFragment extends RoboFragment implements TimePickerFragment.TimePickerFragmentListener {
 
     private RequestFormFragmentListener mListener;
     private @InjectView(R.id.request_form_new_instance) Button mBtnNewInstance;
@@ -58,11 +59,16 @@ public class RequestFormFragment extends RoboFragment {
         showTimePickerDialog();
     }
 
+    @Override
+    public void onTimeSet(int hourOfDay, int minute) {
+        Log.i("Time", Integer.toString(hourOfDay));
+    }
+
     public interface RequestFormFragmentListener {
     }
 
     private void showTimePickerDialog() {
-        DialogFragment fragment = new DayOfWeekFragment();
+        DialogFragment fragment = new TimePickerFragment();
         fragment.show(getChildFragmentManager(), "timePicker");
     }
 

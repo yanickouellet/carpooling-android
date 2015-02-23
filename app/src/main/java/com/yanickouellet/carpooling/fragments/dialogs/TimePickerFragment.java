@@ -20,7 +20,7 @@ import java.util.Calendar;
 import roboguice.fragment.RoboDialogFragment;
 
 public class TimePickerFragment extends RoboDialogFragment implements TimePickerDialog.OnTimeSetListener {
-
+    private TimePickerFragmentListener mListener;
 
     public TimePickerFragment() {
     }
@@ -31,12 +31,22 @@ public class TimePickerFragment extends RoboDialogFragment implements TimePicker
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
+        attachListener();
+
         return new TimePickerDialog(getActivity(), this, hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }
 
+    private void attachListener() {
+        mListener = (TimePickerFragmentListener) getParentFragment();
+    }
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mListener.onTimeSet(hourOfDay, minute);
+    }
 
+    public interface TimePickerFragmentListener {
+        void onTimeSet(int hourOfDay, int minute);
     }
 }
