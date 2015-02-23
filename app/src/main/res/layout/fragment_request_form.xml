@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yanickouellet.carpooling.fragments.RequestFormFragment">
+
+    <LinearLayout
+        style="@style/FullLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText android:id="@+id/request_form_from_address"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/from_address" android:inputType="text"
+            android:maxLines="1" android:singleLine="true" />
+
+        <EditText android:id="@+id/request_form_to_address"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/to_address" android:inputType="text"
+            android:maxLines="1" android:singleLine="true" />
+
+        <CheckBox android:id="@+id/request_form_chk_ponctual"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/ponctual_or_regular" />
+
+        <Button android:id="@+id/request_form_new_instance" style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/add_instance" />
+
+        <Button android:id="@+id/request_from_save" style="?android:textAppearanceSmall"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="@string/save"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</FrameLayout>

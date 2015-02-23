@@ -13,6 +13,11 @@
     <string name="profile_title">Profile</string>
     <string name="drawer_open">Menu ouvert</string>
     <string name="drawer_close">Menu fermé</string>
+    <string name="from_address">Adresse de départ</string>
+    <string name="to_address">Adresse d\'arrivée</string>
+    <string name="ponctual_or_regular">Trajet ponctuel</string>
+    <string name="add_instance">Ajouter une occurance</string>
+    <string name="day_of_week">Jour de la semaine</string>
 
     <string-array name="app_menu">
         <item>Profile</item>

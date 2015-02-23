@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.yanickouellet.carpooling.fragments.ProfileFragment;
+import com.yanickouellet.carpooling.fragments.RequestFormFragment;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
@@ -21,7 +22,8 @@ import roboguice.inject.InjectView;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends RoboActionBarActivity implements
-        ProfileFragment.ProfileFragmentListener {
+        ProfileFragment.ProfileFragmentListener,
+        RequestFormFragment.RequestFormFragmentListener {
 
     private @InjectResource(R.array.app_menu) String[] mMenuTitles;
     private @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
@@ -84,6 +86,10 @@ public class MainActivity extends RoboActionBarActivity implements
         LoadFragment(new ProfileFragment());
     }
 
+    private void LoadRequestFormFragment() {
+        LoadFragment(new RequestFormFragment());
+    }
+
     private void LoadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
@@ -100,8 +106,12 @@ public class MainActivity extends RoboActionBarActivity implements
 
     private void selectItem(int position) {
         switch (position) {
-            case 1:
+            case 0:
                 LoadProfileFragment();
+                break;
+            case 1:
+                LoadRequestFormFragment();
+                break;
         }
 
         mDrawerList.setItemChecked(position, true);
