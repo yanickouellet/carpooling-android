@@ -4,23 +4,15 @@ package com.yanickouellet.carpooling.fragments.dialogs;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
-
-import com.yanickouellet.carpooling.R;
 
 import java.util.Calendar;
 
 import roboguice.fragment.RoboDialogFragment;
 
 public class TimePickerFragment extends RoboDialogFragment implements TimePickerDialog.OnTimeSetListener {
-    private TimePickerFragmentListener mListener;
+    private OnTimeSetListener mListener;
 
     public TimePickerFragment() {
     }
@@ -38,7 +30,7 @@ public class TimePickerFragment extends RoboDialogFragment implements TimePicker
     }
 
     private void attachListener() {
-        mListener = (TimePickerFragmentListener) getParentFragment();
+        mListener = (OnTimeSetListener) getParentFragment();
     }
 
     @Override
@@ -46,7 +38,7 @@ public class TimePickerFragment extends RoboDialogFragment implements TimePicker
         mListener.onTimeSet(hourOfDay, minute);
     }
 
-    public interface TimePickerFragmentListener {
+    public interface OnTimeSetListener {
         void onTimeSet(int hourOfDay, int minute);
     }
 }
