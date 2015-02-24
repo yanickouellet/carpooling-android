@@ -13,14 +13,18 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.yanickouellet.carpooling.R;
+import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 import com.yanickouellet.carpooling.models.RunRequest;
+
+import java.util.GregorianCalendar;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
 public class RequestFormFragment extends RoboFragment implements
-        TimePickerFragment.OnTimeSetListener {
+        TimePickerFragment.OnTimeSetListener,
+        DatePickerFragment.OnDateSetListener {
 
     private RequestFormFragmentListener mListener;
     private RunRequest mCurrentRequest;
@@ -30,6 +34,7 @@ public class RequestFormFragment extends RoboFragment implements
     private @InjectView(R.id.request_form_chk_ponctual) CheckBox mChkPonctual;
 
     public RequestFormFragment() {
+        mCurrentRequest = new RunRequest();
     }
 
     @Override
@@ -67,10 +72,6 @@ public class RequestFormFragment extends RoboFragment implements
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void onChooseTimeClick() {
-        showTimePickerDialog();
-    }
-
     public void onChkPonctualClick() {
         if (mChkPonctual.isChecked()) {
             mChooseDate.setVisibility(View.VISIBLE);
@@ -89,20 +90,29 @@ public class RequestFormFragment extends RoboFragment implements
         mChooseTime.setText(String.format("%02dH%02d", hourOfDay, minute));
     }
 
-    public interface RequestFormFragmentListener {
+    @Override
+    public void onDateSet(GregorianCalendar date) {
+        mCurrentRequest.setDate(date);
+
+        mChooseDate.setText(mCurrentRequest.getFormatedDate());
     }
 
-    private void showTimePickerDialog() {
-        mCurrentRequest = new RunRequest();
-        DialogFragment fragment = new TimePickerFragment();
-        fragment.show(getChildFragmentManager(), "timePicker");
+    public interface RequestFormFragmentListener {
     }
 
     private void RegisterListeners() {
         mChooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChooseTimeClick();
+                DialogFragment fragment = new TimePickerFragment();
+                fragment.show(getChildFragmentManager(), "timePicker");
+            }
+        });
+        mChooseDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                DialogFragment fragment = new DatePickerFragment();
+                fragment.show(getChildFragmentManager(), "datePicker");
             }
         });
         mChkPonctual.setOnClickListener(new View.OnClickListener(){
