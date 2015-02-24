@@ -23,8 +23,8 @@ public class RequestFormFragment extends RoboFragment implements
 
     private RequestFormFragmentListener mListener;
     private RunRequest mCurrentRequest;
-    private @InjectView(R.id.request_form_new_instance) Button mBtnNewInstance;
     private @InjectView(R.id.request_form_day_spinner) Spinner mDaySpinner;
+    private @InjectView(R.id.request_form_choose_time) Button mChooseTime;
 
     public RequestFormFragment() {
     }
@@ -77,6 +77,8 @@ public class RequestFormFragment extends RoboFragment implements
     public void onTimeSet(int hourOfDay, int minute) {
         mCurrentRequest.setHour(hourOfDay);
         mCurrentRequest.setMinute(minute);
+
+        mChooseTime.setText(String.format("%02dH%02d", hourOfDay, minute));
     }
 
     public interface RequestFormFragmentListener {
@@ -85,11 +87,11 @@ public class RequestFormFragment extends RoboFragment implements
     private void showTimePickerDialog() {
         mCurrentRequest = new RunRequest();
         DialogFragment fragment = new TimePickerFragment();
-        fragment.show(getChildFragmentManager(), "dayOfWeekPicker");
+        fragment.show(getChildFragmentManager(), "timePicker");
     }
 
     private void RegisterListeners() {
-        mBtnNewInstance.setOnClickListener(new View.OnClickListener() {
+        mChooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onNewInstanceClick();

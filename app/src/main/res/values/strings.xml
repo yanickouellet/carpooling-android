@@ -18,6 +18,7 @@
     <string name="ponctual_or_regular">Trajet ponctuel</string>
     <string name="add_instance">Ajouter une occurance</string>
     <string name="day_of_week">Jour de la semaine</string>
+    <string name="choose_time">Choisir l\'heure</string>
 
     <string-array name="app_menu">
         <item>Profile</item>

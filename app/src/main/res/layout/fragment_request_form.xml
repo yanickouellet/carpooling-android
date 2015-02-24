@@ -26,9 +26,9 @@
         <Spinner android:id="@+id/request_form_day_spinner"
             android:layout_width="fill_parent" android:layout_height="wrap_content" />
 
-        <Button android:id="@+id/request_form_new_instance" style="?android:textAppearanceSmall"
+        <Button android:id="@+id/request_form_choose_time" style="?android:textAppearanceSmall"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/add_instance" />
+            android:text="@string/choose_time" />
 
         <Button android:id="@+id/request_from_save" style="?android:textAppearanceSmall"
             android:layout_width="match_parent" android:layout_height="wrap_content"
