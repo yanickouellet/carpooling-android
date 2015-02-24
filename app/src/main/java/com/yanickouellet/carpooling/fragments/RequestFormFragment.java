@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.yanickouellet.carpooling.R;
@@ -25,6 +26,8 @@ public class RequestFormFragment extends RoboFragment implements
     private RunRequest mCurrentRequest;
     private @InjectView(R.id.request_form_day_spinner) Spinner mDaySpinner;
     private @InjectView(R.id.request_form_choose_time) Button mChooseTime;
+    private @InjectView(R.id.request_form_choose_date) Button mChooseDate;
+    private @InjectView(R.id.request_form_chk_ponctual) CheckBox mChkPonctual;
 
     public RequestFormFragment() {
     }
@@ -33,16 +36,6 @@ public class RequestFormFragment extends RoboFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_request_form, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.days_of_week, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mDaySpinner.setAdapter(adapter);
     }
 
     @Override
@@ -66,11 +59,26 @@ public class RequestFormFragment extends RoboFragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         RegisterListeners();
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.days_of_week, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mDaySpinner.setAdapter(adapter);
+
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void onNewInstanceClick() {
+    public void onChooseTimeClick() {
         showTimePickerDialog();
+    }
+
+    public void onChkPonctualClick() {
+        if (mChkPonctual.isChecked()) {
+            mChooseDate.setVisibility(View.VISIBLE);
+            mDaySpinner.setVisibility(View.GONE);
+        } else {
+            mChooseDate.setVisibility(View.GONE);
+            mDaySpinner.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -94,7 +102,13 @@ public class RequestFormFragment extends RoboFragment implements
         mChooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onNewInstanceClick();
+                onChooseTimeClick();
+            }
+        });
+        mChkPonctual.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onChkPonctualClick();
             }
         });
     }

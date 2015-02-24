@@ -19,6 +19,7 @@
     <string name="add_instance">Ajouter une occurance</string>
     <string name="day_of_week">Jour de la semaine</string>
     <string name="choose_time">Choisir l\'heure</string>
+    <string name="choose_date">Choisir une date</string>
 
     <string-array name="app_menu">
         <item>Profile</item>
