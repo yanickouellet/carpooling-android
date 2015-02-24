@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.fragments.dialogs.DayOfWeekPickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
+import com.yanickouellet.carpooling.models.RunRequest;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -22,6 +23,7 @@ public class RequestFormFragment extends RoboFragment implements
         DayOfWeekPickerFragment.OnDayPickedListener {
 
     private RequestFormFragmentListener mListener;
+    private RunRequest mCurrentRequest;
     private @InjectView(R.id.request_form_new_instance) Button mBtnNewInstance;
 
     public RequestFormFragment() {
@@ -63,12 +65,16 @@ public class RequestFormFragment extends RoboFragment implements
 
     @Override
     public void onTimeSet(int hourOfDay, int minute) {
-        Log.i("Time", Integer.toString(hourOfDay));
+        mCurrentRequest.setHour(hourOfDay);
+        mCurrentRequest.setMinute(minute);
+
+        int a = 0;
     }
 
     @Override
     public void onDayPicked(int dayOfWeek) {
-        Log.i("Day", Integer.toString(dayOfWeek));
+        mCurrentRequest.setDayOfWeek(dayOfWeek);
+
         DialogFragment fragment = new TimePickerFragment();
         fragment.show(getChildFragmentManager(), "timePicker");
     }
@@ -77,6 +83,7 @@ public class RequestFormFragment extends RoboFragment implements
     }
 
     private void showTimePickerDialog() {
+        mCurrentRequest = new RunRequest();
         DialogFragment fragment = new DayOfWeekPickerFragment();
         fragment.show(getChildFragmentManager(), "dayOfWeekPicker");
     }
