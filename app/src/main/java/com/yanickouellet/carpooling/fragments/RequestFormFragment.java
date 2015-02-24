@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.yanickouellet.carpooling.R;
-import com.yanickouellet.carpooling.fragments.dialogs.DayOfWeekPickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 import com.yanickouellet.carpooling.models.RunRequest;
 
@@ -19,12 +19,12 @@ import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
 public class RequestFormFragment extends RoboFragment implements
-        TimePickerFragment.OnTimeSetListener,
-        DayOfWeekPickerFragment.OnDayPickedListener {
+        TimePickerFragment.OnTimeSetListener {
 
     private RequestFormFragmentListener mListener;
     private RunRequest mCurrentRequest;
     private @InjectView(R.id.request_form_new_instance) Button mBtnNewInstance;
+    private @InjectView(R.id.request_form_day_spinner) Spinner mDaySpinner;
 
     public RequestFormFragment() {
     }
@@ -33,6 +33,16 @@ public class RequestFormFragment extends RoboFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_request_form, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.days_of_week, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mDaySpinner.setAdapter(adapter);
     }
 
     @Override
@@ -67,16 +77,6 @@ public class RequestFormFragment extends RoboFragment implements
     public void onTimeSet(int hourOfDay, int minute) {
         mCurrentRequest.setHour(hourOfDay);
         mCurrentRequest.setMinute(minute);
-
-        int a = 0;
-    }
-
-    @Override
-    public void onDayPicked(int dayOfWeek) {
-        mCurrentRequest.setDayOfWeek(dayOfWeek);
-
-        DialogFragment fragment = new TimePickerFragment();
-        fragment.show(getChildFragmentManager(), "timePicker");
     }
 
     public interface RequestFormFragmentListener {
@@ -84,7 +84,7 @@ public class RequestFormFragment extends RoboFragment implements
 
     private void showTimePickerDialog() {
         mCurrentRequest = new RunRequest();
-        DialogFragment fragment = new DayOfWeekPickerFragment();
+        DialogFragment fragment = new TimePickerFragment();
         fragment.show(getChildFragmentManager(), "dayOfWeekPicker");
     }
 
