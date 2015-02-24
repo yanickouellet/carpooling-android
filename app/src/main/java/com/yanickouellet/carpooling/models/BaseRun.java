@@ -11,6 +11,7 @@ public abstract class BaseRun {
     private int minute;
     private int dayOfWeek;
     private GregorianCalendar date;
+    private boolean poncutal;
 
     public int getDayOfWeek() {
         return dayOfWeek;
@@ -58,6 +59,14 @@ public abstract class BaseRun {
 
     public void setDate(GregorianCalendar date) {
         this.date = date;
+    }
+
+    public boolean isPoncutal() {
+        return poncutal;
+    }
+
+    public void setPoncutal(boolean poncutal) {
+        this.poncutal = poncutal;
     }
 
     public String getFormatedDate() {

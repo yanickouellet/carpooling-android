@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
@@ -28,9 +30,12 @@ public class RequestFormFragment extends RoboFragment implements
 
     private RequestFormFragmentListener mListener;
     private RunRequest mCurrentRequest;
+    private @InjectView(R.id.request_form_to_address) EditText mToAddress;
+    private @InjectView(R.id.request_form_from_address) EditText mFromAddress;
     private @InjectView(R.id.request_form_day_spinner) Spinner mDaySpinner;
     private @InjectView(R.id.request_form_choose_time) Button mChooseTime;
     private @InjectView(R.id.request_form_choose_date) Button mChooseDate;
+    private @InjectView(R.id.request_form_save) Button mSave;
     private @InjectView(R.id.request_form_chk_ponctual) CheckBox mChkPonctual;
 
     public RequestFormFragment() {
@@ -100,6 +105,39 @@ public class RequestFormFragment extends RoboFragment implements
     public interface RequestFormFragmentListener {
     }
 
+    private boolean validate() {
+        boolean valid = true;
+
+        View focusView = null;
+
+        if (mFromAddress.getText().length() <= 5) {
+            mToAddress.setError(getString(R.string.error_field_required));
+            focusView = mFromAddress;
+            valid = false;
+        }
+
+        if (mToAddress.getText().length() <= 5) {
+            mToAddress.setError(getString(R.string.error_field_required));
+            focusView = mToAddress;
+            valid = false;
+        }
+
+        if (mChkPonctual.isChecked() && mCurrentRequest.getDate() == null) {
+            Toast.makeText(getActivity(), R.string.date_required, Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if(mCurrentRequest.getHour() == 0 && mCurrentRequest.getMinute() == 0) {
+            Toast.makeText(getActivity(), R.string.time_required, Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+
+        if (!valid && focusView != null) {
+            focusView.requestFocus();
+        }
+
+        return valid;
+    }
+
     private void RegisterListeners() {
         mChooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +157,12 @@ public class RequestFormFragment extends RoboFragment implements
             @Override
             public void onClick(View v) {
                 onChkPonctualClick();
+            }
+        });
+        mSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                validate();
             }
         });
     }

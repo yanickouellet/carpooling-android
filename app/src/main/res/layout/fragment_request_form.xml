@@ -35,7 +35,7 @@
             android:text="@string/choose_time" />
 
 
-        <Button android:id="@+id/request_from_save" style="?android:textAppearanceSmall"
+        <Button android:id="@+id/request_form_save" style="?android:textAppearanceSmall"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="16dp" android:text="@string/save"
             android:textStyle="bold" />

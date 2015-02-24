@@ -20,6 +20,8 @@
     <string name="day_of_week">Jour de la semaine</string>
     <string name="choose_time">Choisir l\'heure</string>
     <string name="choose_date">Choisir une date</string>
+    <string name="date_required">La date est requise</string>
+    <string name="time_required">Temps requis</string>
 
     <string-array name="app_menu">
         <item>Profile</item>
