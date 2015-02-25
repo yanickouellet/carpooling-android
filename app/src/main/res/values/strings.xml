@@ -22,6 +22,7 @@
     <string name="choose_date">Choisir une date</string>
     <string name="date_required">La date est requise</string>
     <string name="time_required">Temps requis</string>
+    <string name="run_request_saved">La demande a été sauvegardée avec succès.</string>
 
     <string-array name="app_menu">
         <item>Profile</item>

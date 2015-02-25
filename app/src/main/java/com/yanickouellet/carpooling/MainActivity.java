@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.yanickouellet.carpooling.fragments.ProfileFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
+import com.yanickouellet.carpooling.models.RunRequest;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
@@ -80,6 +82,12 @@ public class MainActivity extends RoboActionBarActivity implements
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestCreated(RunRequest request) {
+        LoadProfileFragment();
+        Toast.makeText(this, R.string.run_request_saved, Toast.LENGTH_LONG).show();
     }
 
     private void LoadProfileFragment() {

@@ -103,6 +103,7 @@ public class RequestFormFragment extends RoboFragment implements
     }
 
     public interface RequestFormFragmentListener {
+        void onRequestCreated(RunRequest request);
     }
 
     private boolean validate() {
@@ -110,15 +111,15 @@ public class RequestFormFragment extends RoboFragment implements
 
         View focusView = null;
 
-        if (mFromAddress.getText().length() <= 5) {
-            mToAddress.setError(getString(R.string.error_field_required));
-            focusView = mFromAddress;
-            valid = false;
-        }
-
         if (mToAddress.getText().length() <= 5) {
             mToAddress.setError(getString(R.string.error_field_required));
             focusView = mToAddress;
+            valid = false;
+        }
+
+        if (mFromAddress.getText().length() <= 5) {
+            mToAddress.setError(getString(R.string.error_field_required));
+            focusView = mFromAddress;
             valid = false;
         }
 
@@ -136,6 +137,23 @@ public class RequestFormFragment extends RoboFragment implements
         }
 
         return valid;
+    }
+
+    private void attemptToSave()
+    {
+        if (validate()) {
+            mCurrentRequest.setFromAddress(mFromAddress.getText().toString());
+            mCurrentRequest.setToAddress(mFromAddress.getText().toString());
+            mCurrentRequest.setPoncutal(mChkPonctual.isChecked());;
+
+            if (mCurrentRequest.isPoncutal()) {
+                mCurrentRequest.setDate(null);
+            } else {
+                mCurrentRequest.setDayOfWeek(mDaySpinner.getSelectedItemPosition());
+            }
+
+            mListener.onRequestCreated(mCurrentRequest);
+        }
     }
 
     private void RegisterListeners() {
@@ -162,7 +180,7 @@ public class RequestFormFragment extends RoboFragment implements
         mSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                validate();
+                attemptToSave();
             }
         });
     }
