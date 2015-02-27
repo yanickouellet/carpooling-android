@@ -5,13 +5,22 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public abstract class BaseRun {
+    private int id;
     private String fromAddress;
     private String toAddress;
     private int hour;
     private int minute;
     private int dayOfWeek;
-    private GregorianCalendar date;
+    private Calendar date;
     private boolean poncutal;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getDayOfWeek() {
         return dayOfWeek;
@@ -53,11 +62,11 @@ public abstract class BaseRun {
         this.minute = minute;
     }
 
-    public GregorianCalendar getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(GregorianCalendar date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 

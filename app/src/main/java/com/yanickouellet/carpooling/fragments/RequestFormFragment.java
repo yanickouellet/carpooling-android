@@ -146,10 +146,9 @@ public class RequestFormFragment extends RoboFragment implements
             mCurrentRequest.setToAddress(mFromAddress.getText().toString());
             mCurrentRequest.setPoncutal(mChkPonctual.isChecked());;
 
-            if (mCurrentRequest.isPoncutal()) {
-                mCurrentRequest.setDate(null);
-            } else {
+            if (!mCurrentRequest.isPoncutal()) {
                 mCurrentRequest.setDayOfWeek(mDaySpinner.getSelectedItemPosition());
+                mCurrentRequest.setDate(null);
             }
 
             mListener.onRequestCreated(mCurrentRequest);

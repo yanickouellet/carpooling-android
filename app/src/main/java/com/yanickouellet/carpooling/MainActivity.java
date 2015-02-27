@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.yanickouellet.carpooling.fragments.ProfileFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
+import com.yanickouellet.carpooling.fragments.RunRequestListFragment;
 import com.yanickouellet.carpooling.models.RunRequest;
+import com.yanickouellet.carpooling.storage.RunRequestDataSource;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
@@ -25,7 +27,8 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_main)
 public class MainActivity extends RoboActionBarActivity implements
         ProfileFragment.ProfileFragmentListener,
-        RequestFormFragment.RequestFormFragmentListener {
+        RequestFormFragment.RequestFormFragmentListener,
+        RunRequestListFragment.OnRunRequestsListFragmentListener {
 
     private @InjectResource(R.array.app_menu) String[] mMenuTitles;
     private @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
@@ -86,6 +89,9 @@ public class MainActivity extends RoboActionBarActivity implements
 
     @Override
     public void onRequestCreated(RunRequest request) {
+        RunRequestDataSource ds = new RunRequestDataSource(this);
+        ds.InsertRunRequest(request);
+
         LoadProfileFragment();
         Toast.makeText(this, R.string.run_request_saved, Toast.LENGTH_LONG).show();
     }
@@ -105,6 +111,10 @@ public class MainActivity extends RoboActionBarActivity implements
                 .commit();
     }
 
+    private void LoadRequestListFragment() {
+        LoadFragment(new RunRequestListFragment());
+    }
+
     private class DrawerItemClickListenet implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +129,9 @@ public class MainActivity extends RoboActionBarActivity implements
                 break;
             case 1:
                 LoadRequestFormFragment();
+                break;
+            case 2:
+                LoadRequestListFragment();
                 break;
         }
 
