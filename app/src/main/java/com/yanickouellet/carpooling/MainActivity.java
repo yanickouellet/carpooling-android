@@ -41,7 +41,8 @@ public class MainActivity extends RoboActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //mToolbar.setLogo(R.drawable.ic_drawer);
+        // This do not seem to be necessary and, when active, it show a strange text in the middle
+        // of the activity
         //setSupportActionBar(mToolbar);
 
         mDrawerToggle = new ActionBarDrawerToggle(
