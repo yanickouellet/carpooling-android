@@ -11,10 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.yanickouellet.carpooling.fragments.OfferDetailFragment;
 import com.yanickouellet.carpooling.fragments.OfferFormFragment;
 import com.yanickouellet.carpooling.fragments.ProfileFragment;
 import com.yanickouellet.carpooling.fragments.RequestDetailFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
+import com.yanickouellet.carpooling.fragments.RunOfferListFragment;
 import com.yanickouellet.carpooling.fragments.RunRequestListFragment;
 import com.yanickouellet.carpooling.models.RunOffer;
 import com.yanickouellet.carpooling.models.RunRequest;
@@ -31,7 +33,8 @@ public class MainActivity extends RoboActionBarActivity implements
         ProfileFragment.OnFragmentListener,
         RequestFormFragment.OnFragmentListener,
         OfferFormFragment.OnFragmentListener,
-        RunRequestListFragment.OnFragmentListener
+        RunRequestListFragment.OnFragmentListener,
+        RunOfferListFragment.OnFragmentListener
         {
 
     private @InjectResource(R.array.app_menu) String[] mMenuTitles;
@@ -93,6 +96,11 @@ public class MainActivity extends RoboActionBarActivity implements
         loadRequestDetailFragment(request);
     }
 
+    @Override
+    public void onRunOfferSelected(RunOffer offer) {
+        loadOfferDetailFragment(offer);
+    }
+
     private void loadProfileFragment() {
         loadFragment(new ProfileFragment());
     }
@@ -111,6 +119,16 @@ public class MainActivity extends RoboActionBarActivity implements
         loadFragment(fragment);
     }
 
+    private void loadOfferDetailFragment(RunOffer offer) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("offer", offer);
+
+        OfferDetailFragment fragment = new OfferDetailFragment();
+        fragment.setArguments(bundle);
+
+        loadFragment(fragment);
+    }
+
     private void loadOfferFormFragment() {
         loadFragment(new OfferFormFragment());
     }
@@ -124,6 +142,10 @@ public class MainActivity extends RoboActionBarActivity implements
 
     private void loadRequestListFragment() {
         loadFragment(new RunRequestListFragment());
+    }
+
+    private void loadOfferListFragment() {
+        loadFragment(new RunOfferListFragment());
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -146,6 +168,9 @@ public class MainActivity extends RoboActionBarActivity implements
                 break;
             case 3:
                 loadOfferFormFragment();
+                break;
+            case 4:
+                loadOfferListFragment();
                 break;
         }
 
