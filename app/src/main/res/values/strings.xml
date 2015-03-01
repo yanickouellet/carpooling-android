@@ -10,7 +10,7 @@
     <string name="profile_phone">No de téléphone</string>
     <string name="save">Sauvegarder</string>
     <string name="profile_name">Nom</string>
-    <string name="profile_title">Profile</string>
+    <string name="profile_title">Profil</string>
     <string name="drawer_open">Menu ouvert</string>
     <string name="drawer_close">Menu fermé</string>
     <string name="from_address">Adresse de départ</string>
@@ -29,9 +29,11 @@
     <string name="yes">oui</string>
 
     <string-array name="app_menu">
-        <item>Profile</item>
+        <item>Profil</item>
         <item>Faire une demande</item>
+        <item>Liste des demandes</item>
         <item>Proposer un parcours</item>
+        <item>Liste des offres</item>
     </string-array>
 
 </resources>
