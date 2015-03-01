@@ -49,6 +49,8 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
 
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView.setEmptyView(view.findViewById(android.R.id.empty));
+        setEmptyText(getString(R.string.no_request));
         mListView.setAdapter(mAdapter);
 
         mListView.setOnItemClickListener(this);

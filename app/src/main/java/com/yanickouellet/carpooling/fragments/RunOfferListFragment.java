@@ -48,6 +48,8 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
 
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView.setEmptyView(view.findViewById(android.R.id.empty));
+        setEmptyText(getString(R.string.no_offer));
         mListView.setAdapter(mAdapter);
 
         mListView.setOnItemClickListener(this);

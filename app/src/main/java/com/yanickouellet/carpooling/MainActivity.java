@@ -47,9 +47,8 @@ public class MainActivity extends RoboActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // This do not seem to be necessary and, when active, it show a strange text in the middle
-        // of the activity
-        //setSupportActionBar(mToolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -78,7 +77,7 @@ public class MainActivity extends RoboActionBarActivity implements
         RunRequestDataSource ds = new RunRequestDataSource(this);
         ds.InsertRunRequest(request);
 
-        loadProfileFragment();
+        loadRequestListFragment();
         Toast.makeText(this, R.string.run_request_saved, Toast.LENGTH_LONG).show();
     }
 
@@ -87,7 +86,7 @@ public class MainActivity extends RoboActionBarActivity implements
         RunOfferDataSource ds = new RunOfferDataSource(this);
         ds.InsertRunOffer(offer);
 
-        loadProfileFragment();
+        loadOfferListFragment();
         Toast.makeText(this, R.string.run_offer_saved, Toast.LENGTH_LONG).show();
     }
 
@@ -103,10 +102,14 @@ public class MainActivity extends RoboActionBarActivity implements
 
     private void loadProfileFragment() {
         loadFragment(new ProfileFragment());
+        mDrawerList.setItemChecked(0, true);
+        setTitle(getString(R.string.profile_title));
     }
 
     private void loadRequestFormFragment() {
         loadFragment(new RequestFormFragment());
+        mDrawerList.setItemChecked(1, true);
+        mToolbar.setTitle(getString(R.string.request_form_title));
     }
 
     private void loadRequestDetailFragment(RunRequest request) {
@@ -117,6 +120,7 @@ public class MainActivity extends RoboActionBarActivity implements
         fragment.setArguments(bundle);
 
         loadFragment(fragment);
+        mToolbar.setTitle(getString(R.string.request_detail_title));
     }
 
     private void loadOfferDetailFragment(RunOffer offer) {
@@ -127,10 +131,13 @@ public class MainActivity extends RoboActionBarActivity implements
         fragment.setArguments(bundle);
 
         loadFragment(fragment);
+        mToolbar.setTitle(getString(R.string.offer_detail_title));
     }
 
     private void loadOfferFormFragment() {
         loadFragment(new OfferFormFragment());
+        mDrawerList.setItemChecked(3, true);
+        mToolbar.setTitle(getString(R.string.offer_form_title));
     }
 
     private void loadFragment(Fragment fragment) {
@@ -142,10 +149,14 @@ public class MainActivity extends RoboActionBarActivity implements
 
     private void loadRequestListFragment() {
         loadFragment(new RunRequestListFragment());
+        mDrawerList.setItemChecked(2, true);
+        mToolbar.setTitle(getString(R.string.request_list_title));
     }
 
     private void loadOfferListFragment() {
         loadFragment(new RunOfferListFragment());
+        mDrawerList.setItemChecked(4, true);
+        mToolbar.setTitle(getString(R.string.offer_list_title));
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -174,7 +185,6 @@ public class MainActivity extends RoboActionBarActivity implements
                 break;
         }
 
-        mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 }

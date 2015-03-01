@@ -30,6 +30,14 @@
     <string name="run_offer_saved">L\'offre a été sauvegardée</string>
     <string name="places">Nombre de places</string>
     <string name="km_value">Valeur de kilométrage</string>
+    <string name="no_offer">Aucune offre de covoiturage.</string>
+    <string name="no_request">Aucune requête de covoiturage</string>
+    <string name="request_form_title">Demande de covoiturage</string>
+    <string name="request_detail_title">Détail d\'une demande</string>
+    <string name="offer_detail_title">Détail d\'une offre</string>
+    <string name="offer_form_title">Proposer un covoiturage</string>
+    <string name="request_list_title">Liste des demandes</string>
+    <string name="offer_list_title">Liste des offres</string>
 
     <string-array name="app_menu">
         <item>Profil</item>
