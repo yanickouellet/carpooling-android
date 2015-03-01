@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yanickouellet.carpooling.fragments.OfferFormFragment">
+
+    <LinearLayout
+        style="@style/FullLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText android:id="@+id/offer_form_from_address"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/from_address" android:inputType="text"
+            android:maxLines="1" android:singleLine="true" />
+
+        <EditText android:id="@+id/offer_form_to_address"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/to_address" android:inputType="text"
+            android:maxLines="1" android:singleLine="true" />
+
+        <EditText android:id="@+id/offer_form_places"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/places" android:inputType="number"
+            android:maxLines="1" android:singleLine="true" />
+
+        <EditText android:id="@+id/offer_form_km_value"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/km_value" android:inputType="number"
+            android:maxLines="1" android:singleLine="true" />
+
+        <CheckBox android:id="@+id/offer_form_chk_ponctual"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="@string/ponctual_or_regular" />
+
+        <Spinner android:id="@+id/offer_form_day_spinner"
+            android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+        <Button android:id="@+id/offer_form_choose_date" style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/choose_date" android:visibility="gone" />
+
+        <Button android:id="@+id/offer_form_choose_time" style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/choose_time" />
+
+
+        <Button android:id="@+id/offer_form_save" style="?android:textAppearanceSmall"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="@string/save"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</FrameLayout>

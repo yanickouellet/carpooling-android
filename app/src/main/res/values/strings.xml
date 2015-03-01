@@ -27,6 +27,9 @@
     <string name="carpooling_moment">Moment</string>
     <string name="no">Non</string>
     <string name="yes">oui</string>
+    <string name="run_offer_saved">L\'offre a été sauvegardée</string>
+    <string name="places">Nombre de places</string>
+    <string name="km_value">Valeur de kilométrage</string>
 
     <string-array name="app_menu">
         <item>Profil</item>

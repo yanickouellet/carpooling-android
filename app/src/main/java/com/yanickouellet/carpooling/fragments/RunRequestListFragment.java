@@ -75,7 +75,7 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mListener.OnRunRequestSelected(mRequests.get(position));
+        mListener.onRunRequestSelected(mRequests.get(position));
     }
 
     public void setEmptyText(CharSequence emptyText) {
@@ -87,7 +87,7 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
     }
 
     public interface OnFragmentListener {
-        public void OnRunRequestSelected(RunRequest request);
+        public void onRunRequestSelected(RunRequest request);
     }
 
 }

@@ -5,19 +5,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.yanickouellet.carpooling.fragments.OfferFormFragment;
 import com.yanickouellet.carpooling.fragments.ProfileFragment;
 import com.yanickouellet.carpooling.fragments.RequestDetailFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
 import com.yanickouellet.carpooling.fragments.RunRequestListFragment;
+import com.yanickouellet.carpooling.models.RunOffer;
 import com.yanickouellet.carpooling.models.RunRequest;
+import com.yanickouellet.carpooling.storage.RunOfferDataSource;
 import com.yanickouellet.carpooling.storage.RunRequestDataSource;
 
 import roboguice.activity.RoboActionBarActivity;
@@ -29,7 +30,9 @@ import roboguice.inject.InjectView;
 public class MainActivity extends RoboActionBarActivity implements
         ProfileFragment.OnFragmentListener,
         RequestFormFragment.OnFragmentListener,
-        RunRequestListFragment.OnFragmentListener {
+        OfferFormFragment.OnFragmentListener,
+        RunRequestListFragment.OnFragmentListener
+        {
 
     private @InjectResource(R.array.app_menu) String[] mMenuTitles;
     private @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
@@ -57,7 +60,7 @@ public class MainActivity extends RoboActionBarActivity implements
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         if (savedInstanceState == null) {
-            LoadProfileFragment();
+            loadProfileFragment();
         }
     }
 
@@ -72,42 +75,55 @@ public class MainActivity extends RoboActionBarActivity implements
         RunRequestDataSource ds = new RunRequestDataSource(this);
         ds.InsertRunRequest(request);
 
-        LoadProfileFragment();
+        loadProfileFragment();
         Toast.makeText(this, R.string.run_request_saved, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void OnRunRequestSelected(RunRequest request) {
-        LoadRequestDetailFragment(request);
+    public void onOfferCreated(RunOffer offer) {
+        RunOfferDataSource ds = new RunOfferDataSource(this);
+        ds.InsertRunOffer(offer);
+
+        loadProfileFragment();
+        Toast.makeText(this, R.string.run_offer_saved, Toast.LENGTH_LONG).show();
     }
 
-    private void LoadProfileFragment() {
-        LoadFragment(new ProfileFragment());
+    @Override
+    public void onRunRequestSelected(RunRequest request) {
+        loadRequestDetailFragment(request);
     }
 
-    private void LoadRequestFormFragment() {
-        LoadFragment(new RequestFormFragment());
+    private void loadProfileFragment() {
+        loadFragment(new ProfileFragment());
     }
 
-    private void LoadRequestDetailFragment(RunRequest request) {
+    private void loadRequestFormFragment() {
+        loadFragment(new RequestFormFragment());
+    }
+
+    private void loadRequestDetailFragment(RunRequest request) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("request", request);
 
         RequestDetailFragment fragment = new RequestDetailFragment();
         fragment.setArguments(bundle);
 
-        LoadFragment(fragment);
+        loadFragment(fragment);
     }
 
-    private void LoadFragment(Fragment fragment) {
+    private void loadOfferFormFragment() {
+        loadFragment(new OfferFormFragment());
+    }
+
+    private void loadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    private void LoadRequestListFragment() {
-        LoadFragment(new RunRequestListFragment());
+    private void loadRequestListFragment() {
+        loadFragment(new RunRequestListFragment());
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -120,13 +136,16 @@ public class MainActivity extends RoboActionBarActivity implements
     private void selectItem(int position) {
         switch (position) {
             case 0:
-                LoadProfileFragment();
+                loadProfileFragment();
                 break;
             case 1:
-                LoadRequestFormFragment();
+                loadRequestFormFragment();
                 break;
             case 2:
-                LoadRequestListFragment();
+                loadRequestListFragment();
+                break;
+            case 3:
+                loadOfferFormFragment();
                 break;
         }
 
