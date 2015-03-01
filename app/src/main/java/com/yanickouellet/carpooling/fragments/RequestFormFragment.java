@@ -28,7 +28,7 @@ public class RequestFormFragment extends RoboFragment implements
         TimePickerFragment.OnTimeSetListener,
         DatePickerFragment.OnDateSetListener {
 
-    private RequestFormFragmentListener mListener;
+    private OnFragmentListener mListener;
     private RunRequest mCurrentRequest;
     private @InjectView(R.id.request_form_to_address) EditText mToAddress;
     private @InjectView(R.id.request_form_from_address) EditText mFromAddress;
@@ -52,7 +52,7 @@ public class RequestFormFragment extends RoboFragment implements
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (RequestFormFragmentListener) activity;
+            mListener = (OnFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -102,7 +102,7 @@ public class RequestFormFragment extends RoboFragment implements
         mChooseDate.setText(mCurrentRequest.getFormatedDate());
     }
 
-    public interface RequestFormFragmentListener {
+    public interface OnFragmentListener {
         void onRequestCreated(RunRequest request);
     }
 

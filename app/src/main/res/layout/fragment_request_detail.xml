@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yanickouellet.carpooling.fragments.RequestDetailFragment"
+    android:padding="@dimen/application_padding">
+
+    <TextView android:id="@+id/request_detail_lbl_from_address" style="@style/DetailTextView"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/from_address" />
+
+    <TextView android:id="@+id/request_detail_from_address"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="hello" />
+
+    <TextView android:id="@+id/request_detail_lbl_to_address" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_from_address"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/to_address" />
+
+    <TextView android:id="@+id/request_detail_to_address" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_from_address"
+        android:layout_toRightOf="@id/request_detail_lbl_to_address"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"  />
+
+    <TextView android:id="@+id/request_detail_lbl_is_ponctual" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_to_address"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/is_ponctual" />
+
+    <TextView android:id="@+id/request_detail_is_ponctual" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_to_address"
+        android:layout_toRightOf="@id/request_detail_lbl_is_ponctual"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"  />
+
+    <TextView android:id="@+id/request_detail_lbl_date" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_is_ponctual"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/carpooling_moment" />
+
+    <TextView android:id="@+id/request_detail_date" style="@style/DetailTextView"
+        android:layout_below="@id/request_detail_is_ponctual"
+        android:layout_toRightOf="@id/request_detail_lbl_date"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"  />
+
+</RelativeLayout>

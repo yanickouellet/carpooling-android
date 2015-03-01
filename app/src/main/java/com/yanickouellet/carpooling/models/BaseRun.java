@@ -1,10 +1,11 @@
 package com.yanickouellet.carpooling.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public abstract class BaseRun {
+public abstract class BaseRun implements Serializable {
     private int id;
     private String fromAddress;
     private String toAddress;

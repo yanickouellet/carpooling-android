@@ -1,16 +1,14 @@
 package com.yanickouellet.carpooling.adapters;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.models.RunRequest;
+import com.yanickouellet.carpooling.presenters.DatePresenter;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class RunRequestsAdapter extends ArrayAdapter<RunRequest> {
@@ -24,19 +22,7 @@ public class RunRequestsAdapter extends ArrayAdapter<RunRequest> {
 
         RunRequest req = getItem(position);
 
-        String text = "";
-
-        if (req.isPoncutal()) {
-            Calendar date = req.getDate();
-            text += date.get(Calendar.DAY_OF_MONTH) + " " +
-                    date.getDisplayName(Calendar.MONTH, Calendar.LONG, getContext().getResources().getConfiguration().locale);
-        } else {
-            text += getContext().getResources().getStringArray(R.array.days_of_week)[req.getDayOfWeek()];
-        }
-
-        text += " " + req.getHour() + "H" + req.getMinute();
-
-        row.setText(text);
+        row.setText(DatePresenter.presentRunDate(req, getContext()));
 
         return row;
     }

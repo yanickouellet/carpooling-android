@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.yanickouellet.carpooling.R;
 
 import com.yanickouellet.carpooling.adapters.RunRequestsAdapter;
-import com.yanickouellet.carpooling.fragments.dummy.DummyContent;
 import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.storage.RunRequestDataSource;
 
@@ -24,7 +22,7 @@ import roboguice.fragment.RoboFragment;
 
 public class RunRequestListFragment extends RoboFragment implements AbsListView.OnItemClickListener {
 
-    private OnRunRequestsListFragmentListener mListener;
+    private OnFragmentListener mListener;
 
     private AbsListView mListView;
     private ListAdapter mAdapter;
@@ -62,10 +60,10 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnRunRequestsListFragmentListener) activity;
+            mListener = (OnFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFragmentListener");
         }
     }
 
@@ -75,16 +73,11 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
         mListener = null;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mListener.OnRunRequestSelected(mRequests.get(position));
     }
 
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
     public void setEmptyText(CharSequence emptyText) {
         View emptyView = mListView.getEmptyView();
 
@@ -93,8 +86,8 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
         }
     }
 
-    public interface OnRunRequestsListFragmentListener {
-
+    public interface OnFragmentListener {
+        public void OnRunRequestSelected(RunRequest request);
     }
 
 }
