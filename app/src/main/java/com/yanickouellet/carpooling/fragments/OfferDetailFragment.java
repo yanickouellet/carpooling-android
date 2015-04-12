@@ -23,6 +23,7 @@ public class OfferDetailFragment extends RoboFragment {
     private @InjectView(R.id.offer_detail_km_value) TextView mKmValue;
     private @InjectView(R.id.offer_detail_is_ponctual) TextView mIsPonctual;
     private @InjectView(R.id.offer_detail_date) TextView mDate;
+    private @InjectView(R.id.offer_detail_state) TextView mState;
 
     public OfferDetailFragment() {
     }
@@ -46,5 +47,6 @@ public class OfferDetailFragment extends RoboFragment {
         mKmValue.setText(Long.toString(mOffer.getKmValue()));
         mIsPonctual.setText(mOffer.getPonctual() ? R.string.yes : R.string.no);
         mDate.setText(DatePresenter.presentOfferDate(mOffer, getActivity()));
+        mState.setText(Long.toString(mOffer.getPlaces() - mOffer.getRemainingPlaces()) + " / " + mOffer.getPlaces().toString());
     }
 }

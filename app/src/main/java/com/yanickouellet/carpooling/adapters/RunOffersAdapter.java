@@ -23,7 +23,9 @@ public class RunOffersAdapter extends ArrayAdapter<RunOffer> {
 
         RunOffer req = getItem(position);
 
-        row.setText(DatePresenter.presentOfferDate(req, getContext()));
+        String count = " (" + Long.toString(req.getPlaces() - req.getRemainingPlaces()) + " / " + req.getPlaces().toString() + ")";
+
+        row.setText(DatePresenter.presentOfferDate(req, getContext()) + count);
 
         return row;
     }

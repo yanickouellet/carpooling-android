@@ -40,6 +40,9 @@
     <string name="offer_list_title">Liste des offres</string>
     <string name="server_error">Une erreur est survenue sur le serveur</string>
     <string name="invalid_address">Une des adresse est invalide</string>
+    <string name="state">Places occupées</string>
+    <string name="matched">Correspondance trouvée?</string>
+    <string name="match_found">Comblé</string>
 
     <string-array name="app_menu">
         <item>Profil</item>

@@ -22,6 +22,8 @@ import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 import none.carpooling.Carpooling;
@@ -104,7 +106,8 @@ public class OfferFormFragment extends RoboFragment implements
 
     @Override
     public void onDateSet(GregorianCalendar date) {
-        mCurrentOffer.setDate(date.toString());
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        mCurrentOffer.setDate(fmt.format(date.getTime()));
 
         mChooseDate.setText(mCurrentOffer.getDate());
     }

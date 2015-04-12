@@ -47,4 +47,11 @@
     <TextView android:id="@+id/offer_detail_date" style="@style/DetailTextView.Value"
         android:layout_width="wrap_content" android:layout_height="wrap_content"  />
 
+    <TextView android:id="@+id/offer_detail_lbl_state" style="@style/DetailTextView"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/state" />
+
+    <TextView android:id="@+id/offer_detail_state" style="@style/DetailTextView.Value"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"  />
+
 </LinearLayout>

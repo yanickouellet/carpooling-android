@@ -112,11 +112,9 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
 
         @Override
         protected void onPostExecute(RunOfferCollection runOfferCollection) {
-            if (runOfferCollection != null) {
+            if (runOfferCollection != null && runOfferCollection.getItems() != null) {
                 mOffers.addAll(runOfferCollection.getItems());
                 mAdapter.notifyDataSetChanged();
-            } else {
-                Toast.makeText(getActivity(), getActivity().getString(R.string.server_error), Toast.LENGTH_LONG).show();
             }
         }
     }

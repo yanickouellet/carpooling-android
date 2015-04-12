@@ -22,7 +22,10 @@ import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import none.carpooling.Carpooling;
 import none.carpooling.model.RunRequest;
@@ -102,7 +105,8 @@ public class RequestFormFragment extends RoboFragment implements
 
     @Override
     public void onDateSet(GregorianCalendar date) {
-        mCurrentRequest.setDate(date.toString());
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        mCurrentRequest.setDate(fmt.format(date.getTime()));
 
         mChooseDate.setText(mCurrentRequest.getDate());
     }
@@ -156,7 +160,6 @@ public class RequestFormFragment extends RoboFragment implements
                 mCurrentRequest.setDate(null);
             }
 
-            //mListener.onRequestCreated(mCurrentRequest);
             new SaveRequestTask().execute(mCurrentRequest);
         }
     }

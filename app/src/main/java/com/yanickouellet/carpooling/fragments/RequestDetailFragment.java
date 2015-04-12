@@ -22,6 +22,7 @@ public class RequestDetailFragment extends RoboFragment {
     private @InjectView(R.id.request_detail_to_address) TextView mToAddress;
     private @InjectView(R.id.request_detail_is_ponctual) TextView mIsPonctual;
     private @InjectView(R.id.request_detail_date) TextView mDate;
+    private @InjectView(R.id.request_detail_state) TextView mState;
 
     public RequestDetailFragment() {
     }
@@ -42,7 +43,7 @@ public class RequestDetailFragment extends RoboFragment {
         mFromAddress.setText(mRequest.getFromAddress());
         mToAddress.setText(mRequest.getToAddress());
         mIsPonctual.setText(mRequest.getPonctual() ? R.string.yes : R.string.no);
-        //mDate.setText(DatePresenter.presentRunDate(mRequest, getActivity()));
-        mDate.setText(mRequest.getDate());
+        mDate.setText(DatePresenter.presentRequestDate(mRequest, getActivity()));
+        mState.setText(mRequest.getMatched() ? getString(R.string.yes) : getString(R.string.no));
     }
 }
