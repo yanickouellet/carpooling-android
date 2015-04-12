@@ -1,6 +1,7 @@
 package com.yanickouellet.carpooling.fragments;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +10,20 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 
 import com.yanickouellet.carpooling.adapters.RunRequestsAdapter;
-import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.storage.RunRequestDataSource;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import none.carpooling.Carpooling;
+import none.carpooling.model.RunRequest;
+import none.carpooling.model.RunRequestCollection;
 import roboguice.fragment.RoboFragment;
 
 public class RunRequestListFragment extends RoboFragment implements AbsListView.OnItemClickListener {
@@ -25,7 +31,7 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
     private OnFragmentListener mListener;
 
     private AbsListView mListView;
-    private ListAdapter mAdapter;
+    private RunRequestsAdapter mAdapter;
     private ArrayList<RunRequest> mRequests;
 
     public RunRequestListFragment() {
@@ -35,11 +41,12 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RunRequestDataSource runRequestDataSource = new RunRequestDataSource(getActivity());
-        mRequests = runRequestDataSource.FetchAll();
+        mRequests = new ArrayList<>();
 
         mAdapter = new RunRequestsAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, mRequests);
+
+        new DownloadRequestsTask().execute();
     }
 
     @Override
@@ -90,6 +97,29 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
 
     public interface OnFragmentListener {
         public void onRunRequestSelected(RunRequest request);
+    }
+
+    private class DownloadRequestsTask extends AsyncTask<Void, Void, RunRequestCollection>{
+
+        @Override
+        protected RunRequestCollection doInBackground(Void... params) {
+            try {
+                return AppConstants.getApiServiceHandle().runrequest().list().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(RunRequestCollection runRequestCollection) {
+            if (runRequestCollection != null) {
+                mRequests.addAll(runRequestCollection.getItems());
+                mAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), "Une erreur est survenue sur le serveur", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }

@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yanickouellet.carpooling.R;
-import com.yanickouellet.carpooling.models.RunOffer;
 import com.yanickouellet.carpooling.presenters.DatePresenter;
 
+import none.carpooling.model.RunOffer;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -42,9 +42,9 @@ public class OfferDetailFragment extends RoboFragment {
 
         mFromAddress.setText(mOffer.getFromAddress());
         mToAddress.setText(mOffer.getToAddress());
-        mPlaces.setText(Integer.toString(mOffer.getPlaces()));
-        mKmValue.setText(Integer.toString(mOffer.getKmValue()));
-        mIsPonctual.setText(mOffer.isPoncutal() ? R.string.yes : R.string.no);
-        mDate.setText(DatePresenter.presentRunDate(mOffer, getActivity()));
+        mPlaces.setText(Long.toString(mOffer.getPlaces()));
+        mKmValue.setText(Long.toString(mOffer.getKmValue()));
+        mIsPonctual.setText(mOffer.getPonctual() ? R.string.yes : R.string.no);
+        mDate.setText(DatePresenter.presentOfferDate(mOffer, getActivity()));
     }
 }

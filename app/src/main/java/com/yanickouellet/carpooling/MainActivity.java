@@ -1,6 +1,7 @@
 package com.yanickouellet.carpooling;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,11 +19,11 @@ import com.yanickouellet.carpooling.fragments.RequestDetailFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
 import com.yanickouellet.carpooling.fragments.RunOfferListFragment;
 import com.yanickouellet.carpooling.fragments.RunRequestListFragment;
-import com.yanickouellet.carpooling.models.RunOffer;
-import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.storage.RunOfferDataSource;
 import com.yanickouellet.carpooling.storage.RunRequestDataSource;
 
+import none.carpooling.model.RunOffer;
+import none.carpooling.model.RunRequest;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectResource;
@@ -46,6 +47,9 @@ public class MainActivity extends RoboActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -75,7 +79,7 @@ public class MainActivity extends RoboActionBarActivity implements
     @Override
     public void onRequestCreated(RunRequest request) {
         RunRequestDataSource ds = new RunRequestDataSource(this);
-        ds.InsertRunRequest(request);
+        //ds.InsertRunRequest(request);
 
         loadRequestListFragment();
         Toast.makeText(this, R.string.run_request_saved, Toast.LENGTH_LONG).show();
@@ -84,7 +88,7 @@ public class MainActivity extends RoboActionBarActivity implements
     @Override
     public void onOfferCreated(RunOffer offer) {
         RunOfferDataSource ds = new RunOfferDataSource(this);
-        ds.InsertRunOffer(offer);
+        //ds.InsertRunOffer(offer);
 
         loadOfferListFragment();
         Toast.makeText(this, R.string.run_offer_saved, Toast.LENGTH_LONG).show();

@@ -1,6 +1,7 @@
 package com.yanickouellet.carpooling.fragments;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -14,13 +15,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
-import com.yanickouellet.carpooling.models.RunRequest;
 
+import java.io.IOException;
 import java.util.GregorianCalendar;
 
+import none.carpooling.Carpooling;
+import none.carpooling.model.RunRequest;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -89,17 +93,17 @@ public class RequestFormFragment extends RoboFragment implements
 
     @Override
     public void onTimeSet(int hourOfDay, int minute) {
-        mCurrentRequest.setHour(hourOfDay);
-        mCurrentRequest.setMinute(minute);
+        mCurrentRequest.setHour((long)hourOfDay);
+        mCurrentRequest.setMinute((long)minute);
 
         mChooseTime.setText(String.format("%02dH%02d", hourOfDay, minute));
     }
 
     @Override
     public void onDateSet(GregorianCalendar date) {
-        mCurrentRequest.setDate(date);
+        mCurrentRequest.setDate(date.toString());
 
-        mChooseDate.setText(mCurrentRequest.getFormatedDate());
+        mChooseDate.setText(mCurrentRequest.getDate());
     }
 
     public interface OnFragmentListener {
@@ -143,15 +147,16 @@ public class RequestFormFragment extends RoboFragment implements
     {
         if (validate()) {
             mCurrentRequest.setFromAddress(mFromAddress.getText().toString());
-            mCurrentRequest.setToAddress(mFromAddress.getText().toString());
-            mCurrentRequest.setPoncutal(mChkPonctual.isChecked());;
+            mCurrentRequest.setToAddress(mToAddress.getText().toString());
+            mCurrentRequest.setPonctual(mChkPonctual.isChecked());
 
-            if (!mCurrentRequest.isPoncutal()) {
-                mCurrentRequest.setDayOfWeek(mDaySpinner.getSelectedItemPosition());
+            if (!mCurrentRequest.getPonctual()) {
+                mCurrentRequest.setDayOfWeek((long)mDaySpinner.getSelectedItemPosition());
                 mCurrentRequest.setDate(null);
             }
 
-            mListener.onRequestCreated(mCurrentRequest);
+            //mListener.onRequestCreated(mCurrentRequest);
+            new SaveRequestTask().execute(mCurrentRequest);
         }
     }
 
@@ -182,6 +187,31 @@ public class RequestFormFragment extends RoboFragment implements
                 attemptToSave();
             }
         });
+    }
+
+    private class SaveRequestTask extends AsyncTask<RunRequest, Void, RunRequest> {
+
+        @Override
+        protected RunRequest doInBackground(RunRequest... params) {
+            RunRequest request = params[0];
+
+            Carpooling api = AppConstants.getApiServiceHandle();
+
+            try {
+                return api.runrequest().insert(request).execute();
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(RunRequest request) {
+            if(request != null) {
+                mListener.onRequestCreated(request);
+            }
+        }
     }
 
 }

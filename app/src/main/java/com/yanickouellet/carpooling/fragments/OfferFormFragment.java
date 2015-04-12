@@ -17,11 +17,9 @@ import android.widget.Toast;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
-import com.yanickouellet.carpooling.models.RunOffer;
-import com.yanickouellet.carpooling.models.RunRequest;
-
 import java.util.GregorianCalendar;
 
+import none.carpooling.model.RunOffer;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -92,17 +90,17 @@ public class OfferFormFragment extends RoboFragment implements
 
     @Override
     public void onTimeSet(int hourOfDay, int minute) {
-        mCurrentOffer.setHour(hourOfDay);
-        mCurrentOffer.setMinute(minute);
+        mCurrentOffer.setHour((long)hourOfDay);
+        mCurrentOffer.setMinute((long)minute);
 
         mChooseTime.setText(String.format("%02dH%02d", hourOfDay, minute));
     }
 
     @Override
     public void onDateSet(GregorianCalendar date) {
-        mCurrentOffer.setDate(date);
+        mCurrentOffer.setDate(date.toString());
 
-        mChooseDate.setText(mCurrentOffer.getFormatedDate());
+        mChooseDate.setText(mCurrentOffer.getDate());
     }
 
     public interface OnFragmentListener {
@@ -158,13 +156,13 @@ public class OfferFormFragment extends RoboFragment implements
     {
         if (validate()) {
             mCurrentOffer.setFromAddress(mFromAddress.getText().toString());
-            mCurrentOffer.setToAddress(mFromAddress.getText().toString());
-            mCurrentOffer.setPoncutal(mChkPonctual.isChecked());
-            mCurrentOffer.setPlaces(Integer.parseInt(mPlaces.getText().toString()));
-            mCurrentOffer.setKmValue(Integer.parseInt(mKmValue.getText().toString()));
+            mCurrentOffer.setToAddress(mToAddress.getText().toString());
+            mCurrentOffer.setPonctual(mChkPonctual.isChecked());
+            mCurrentOffer.setPlaces(Long.parseLong(mPlaces.getText().toString()));
+            mCurrentOffer.setKmValue(Long.parseLong(mKmValue.getText().toString()));
 
-            if (!mCurrentOffer.isPoncutal()) {
-                mCurrentOffer.setDayOfWeek(mDaySpinner.getSelectedItemPosition());
+            if (!mCurrentOffer.getPonctual()) {
+                mCurrentOffer.setDayOfWeek((long)mDaySpinner.getSelectedItemPosition());
                 mCurrentOffer.setDate(null);
             }
 

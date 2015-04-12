@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.adapters.RunOffersAdapter;
-import com.yanickouellet.carpooling.models.RunOffer;
 import com.yanickouellet.carpooling.storage.RunOfferDataSource;
 
 import java.util.ArrayList;
 
+import none.carpooling.model.RunOffer;
 import roboguice.fragment.RoboFragment;
 
 public class RunOfferListFragment extends RoboFragment implements AbsListView.OnItemClickListener {
@@ -35,7 +35,7 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
         super.onCreate(savedInstanceState);
 
         RunOfferDataSource RunOfferDataSource = new RunOfferDataSource(getActivity());
-        mOffers = RunOfferDataSource.FetchAll();
+        //mOffers = RunOfferDataSource.FetchAll();
 
         mAdapter = new RunOffersAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, mOffers);

@@ -6,12 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.yanickouellet.carpooling.models.BaseRun;
-import com.yanickouellet.carpooling.models.RunOffer;
-import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.presenters.DatePresenter;
 
 import java.util.List;
+
+import none.carpooling.model.RunOffer;
 
 public class RunOffersAdapter extends ArrayAdapter<RunOffer> {
     public RunOffersAdapter(Context context, int listViewResourceId, int textViewResourceId, List<RunOffer> requests) {
@@ -24,7 +23,7 @@ public class RunOffersAdapter extends ArrayAdapter<RunOffer> {
 
         RunOffer req = getItem(position);
 
-        row.setText(DatePresenter.presentRunDate(req, getContext()));
+        row.setText(DatePresenter.presentOfferDate(req, getContext()));
 
         return row;
     }

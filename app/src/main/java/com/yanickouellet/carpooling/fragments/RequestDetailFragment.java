@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yanickouellet.carpooling.R;
-import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.presenters.DatePresenter;
 
+import none.carpooling.model.RunRequest;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -41,7 +41,8 @@ public class RequestDetailFragment extends RoboFragment {
 
         mFromAddress.setText(mRequest.getFromAddress());
         mToAddress.setText(mRequest.getToAddress());
-        mIsPonctual.setText(mRequest.isPoncutal() ? R.string.yes : R.string.no);
-        mDate.setText(DatePresenter.presentRunDate(mRequest, getActivity()));
+        mIsPonctual.setText(mRequest.getPonctual() ? R.string.yes : R.string.no);
+        //mDate.setText(DatePresenter.presentRunDate(mRequest, getActivity()));
+        mDate.setText(mRequest.getDate());
     }
 }

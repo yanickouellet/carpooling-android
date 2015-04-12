@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.yanickouellet.carpooling.models.RunRequest;
 import com.yanickouellet.carpooling.presenters.DatePresenter;
 
 import java.util.List;
+
+import none.carpooling.model.RunRequest;
 
 public class RunRequestsAdapter extends ArrayAdapter<RunRequest> {
     public RunRequestsAdapter(Context context, int listViewResourceId, int textViewResourceId, List<RunRequest> requests) {
@@ -22,7 +23,7 @@ public class RunRequestsAdapter extends ArrayAdapter<RunRequest> {
 
         RunRequest req = getItem(position);
 
-        row.setText(DatePresenter.presentRunDate(req, getContext()));
+        row.setText(DatePresenter.presentRequestDate(req, getContext()));
 
         return row;
     }

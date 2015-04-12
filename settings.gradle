@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':carpooling_api'
+project(':carpooling_api').projectDir = new File('carpooling')
