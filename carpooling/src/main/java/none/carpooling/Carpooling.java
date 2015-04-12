@@ -57,7 +57,7 @@ public class Carpooling extends com.google.api.client.googleapis.services.json.A
    *
    * @since 1.7
    */
-  public static final String DEFAULT_ROOT_URL = "https://None/_ah/api/";
+  public static final String DEFAULT_ROOT_URL = "https://polar-office-91214.appspot.com/_ah/api/";
 
   /**
    * The default encoded service path of the service. This is determined when the library is

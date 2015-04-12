@@ -1,9 +1,11 @@
 package com.yanickouellet.carpooling.fragments;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +16,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
+
+import java.io.IOException;
 import java.util.GregorianCalendar;
 
+import none.carpooling.Carpooling;
 import none.carpooling.model.RunOffer;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -166,7 +172,7 @@ public class OfferFormFragment extends RoboFragment implements
                 mCurrentOffer.setDate(null);
             }
 
-            mListener.onOfferCreated(mCurrentOffer);
+            new SaveOfferTask().execute(mCurrentOffer);
         }
     }
 
@@ -197,6 +203,33 @@ public class OfferFormFragment extends RoboFragment implements
                 attemptToSave();
             }
         });
+    }
+
+    private class SaveOfferTask extends AsyncTask<RunOffer, Void, RunOffer> {
+
+        @Override
+        protected RunOffer doInBackground(RunOffer... params) {
+            RunOffer offer = params[0];
+
+            Carpooling api = AppConstants.getApiServiceHandle();
+
+            try {
+                return api.runoffer().insert(offer).execute();
+            } catch (IOException ex) {
+                Log.e("API", "Exception during api call", ex);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(RunOffer offer) {
+            if(offer != null) {
+                mListener.onOfferCreated(offer);
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.invalid_address), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }

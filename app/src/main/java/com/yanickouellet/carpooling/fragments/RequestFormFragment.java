@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,8 +200,8 @@ public class RequestFormFragment extends RoboFragment implements
 
             try {
                 return api.runrequest().insert(request).execute();
-            } catch (IOException e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (IOException ex) {
+                Log.e("API", "Exception during api call", ex);
             }
 
             return null;
@@ -210,6 +211,8 @@ public class RequestFormFragment extends RoboFragment implements
         protected void onPostExecute(RunRequest request) {
             if(request != null) {
                 mListener.onRequestCreated(request);
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.invalid_address), Toast.LENGTH_LONG).show();
             }
         }
     }

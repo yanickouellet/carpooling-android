@@ -18,6 +18,8 @@
 
 package none.carpooling.model;
 
+import java.io.Serializable;
+
 /**
  * Model definition for RunOffer.
  *
@@ -29,7 +31,7 @@ package none.carpooling.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class RunOffer extends com.google.api.client.json.GenericJson {
+public final class RunOffer extends com.google.api.client.json.GenericJson implements Serializable {
 
   /**
    * The value may be {@code null}.

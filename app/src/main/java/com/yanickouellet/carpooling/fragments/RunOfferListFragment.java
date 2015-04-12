@@ -1,6 +1,7 @@
 package com.yanickouellet.carpooling.fragments;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +10,19 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.adapters.RunOffersAdapter;
 import com.yanickouellet.carpooling.storage.RunOfferDataSource;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import none.carpooling.model.RunOffer;
+import none.carpooling.model.RunOfferCollection;
+import none.carpooling.model.RunRequestCollection;
 import roboguice.fragment.RoboFragment;
 
 public class RunOfferListFragment extends RoboFragment implements AbsListView.OnItemClickListener {
@@ -24,7 +30,7 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
     private OnFragmentListener mListener;
 
     private AbsListView mListView;
-    private ListAdapter mAdapter;
+    private RunOffersAdapter mAdapter;
     private ArrayList<RunOffer> mOffers;
 
     public RunOfferListFragment() {
@@ -34,11 +40,12 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RunOfferDataSource RunOfferDataSource = new RunOfferDataSource(getActivity());
-        //mOffers = RunOfferDataSource.FetchAll();
+        mOffers = new ArrayList<>();
 
         mAdapter = new RunOffersAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, mOffers);
+
+        new DownloadOffersTask().execute();
     }
 
     @Override
@@ -89,6 +96,29 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
 
     public interface OnFragmentListener {
         public void onRunOfferSelected(RunOffer offer);
+    }
+
+    private class DownloadOffersTask extends AsyncTask<Void, Void, RunOfferCollection> {
+
+        @Override
+        protected RunOfferCollection doInBackground(Void... params) {
+            try {
+                return AppConstants.getApiServiceHandle().runoffer().list().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(RunOfferCollection runOfferCollection) {
+            if (runOfferCollection != null) {
+                mOffers.addAll(runOfferCollection.getItems());
+                mAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.server_error), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
