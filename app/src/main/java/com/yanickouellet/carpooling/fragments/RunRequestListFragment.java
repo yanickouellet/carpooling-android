@@ -8,20 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 
 import com.yanickouellet.carpooling.adapters.RunRequestsAdapter;
-import com.yanickouellet.carpooling.storage.RunRequestDataSource;
+import com.yanickouellet.carpooling.storage.Serializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import none.carpooling.Carpooling;
 import none.carpooling.model.RunRequest;
 import none.carpooling.model.RunRequestCollection;
 import roboguice.fragment.RoboFragment;
@@ -45,6 +42,13 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
 
         mAdapter = new RunRequestsAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, mRequests);
+
+        Serializer serializer = new Serializer(this.getActivity());
+        Object obj =  serializer.readObject("requests.bin");
+        if (obj != null) {
+            mRequests.addAll((ArrayList<RunRequest>)obj);
+        }
+        mAdapter.notifyDataSetChanged();
 
         new DownloadRequestsTask().execute();
     }
@@ -116,6 +120,9 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
             if (runRequestCollection != null && runRequestCollection.getItems() != null) {
                 mRequests.addAll(runRequestCollection.getItems());
                 mAdapter.notifyDataSetChanged();
+
+                Serializer serializer = new Serializer(RunRequestListFragment.this.getActivity());
+                serializer.writeObject(mRequests, "requests.bin");
             }
         }
     }

@@ -18,6 +18,8 @@
 
 package none.carpooling.model;
 
+import java.io.Serializable;
+
 /**
  * ProtoRPC container for users.User objects. Attributes: email: String; The email of the user.
  * auth_domain: String; The auth domain of the user. user_id: String; The user ID.
@@ -31,7 +33,7 @@ package none.carpooling.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class UserMessage extends com.google.api.client.json.GenericJson {
+public final class UserMessage extends com.google.api.client.json.GenericJson implements Serializable {
 
   /**
    * The value may be {@code null}.

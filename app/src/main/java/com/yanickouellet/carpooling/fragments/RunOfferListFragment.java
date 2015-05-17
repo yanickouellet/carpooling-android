@@ -8,21 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yanickouellet.carpooling.AppConstants;
 import com.yanickouellet.carpooling.R;
 import com.yanickouellet.carpooling.adapters.RunOffersAdapter;
-import com.yanickouellet.carpooling.storage.RunOfferDataSource;
+import com.yanickouellet.carpooling.storage.Serializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import none.carpooling.model.RunOffer;
 import none.carpooling.model.RunOfferCollection;
-import none.carpooling.model.RunRequestCollection;
 import roboguice.fragment.RoboFragment;
 
 public class RunOfferListFragment extends RoboFragment implements AbsListView.OnItemClickListener {
@@ -44,6 +41,13 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
 
         mAdapter = new RunOffersAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, mOffers);
+
+        Serializer serializer = new Serializer(this.getActivity());
+        Object obj =  serializer.readObject("offers.bin");
+        if (obj != null) {
+            mOffers.addAll((ArrayList<RunOffer>)obj);
+        }
+        mAdapter.notifyDataSetChanged();
 
         new DownloadOffersTask().execute();
     }
@@ -113,8 +117,12 @@ public class RunOfferListFragment extends RoboFragment implements AbsListView.On
         @Override
         protected void onPostExecute(RunOfferCollection runOfferCollection) {
             if (runOfferCollection != null && runOfferCollection.getItems() != null) {
+                mOffers.clear();
                 mOffers.addAll(runOfferCollection.getItems());
                 mAdapter.notifyDataSetChanged();
+
+                Serializer serializer = new Serializer(RunOfferListFragment.this.getActivity());
+                serializer.writeObject(mOffers, "offers.bin");
             }
         }
     }

@@ -18,6 +18,8 @@
 
 package none.carpooling.model;
 
+import java.io.Serializable;
+
 /**
  * ProtoRPC container for GeoPt instances. Attributes: lat: Float; The latitude of the point. lon:
  * Float; The longitude of the point.
@@ -30,7 +32,7 @@ package none.carpooling.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class GeoPtMessage extends com.google.api.client.json.GenericJson {
+public final class GeoPtMessage extends com.google.api.client.json.GenericJson implements Serializable {
 
   /**
    * The value may be {@code null}.

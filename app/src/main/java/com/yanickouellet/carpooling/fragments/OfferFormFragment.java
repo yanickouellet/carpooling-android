@@ -22,6 +22,7 @@ import com.yanickouellet.carpooling.fragments.dialogs.DatePickerFragment;
 import com.yanickouellet.carpooling.fragments.dialogs.TimePickerFragment;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -218,6 +219,13 @@ public class OfferFormFragment extends RoboFragment implements
 
             try {
                 return api.runoffer().insert(offer).execute();
+            } catch (UnknownHostException e) {
+                OfferFormFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), OfferFormFragment.this.getString(R.string.network_unreachable), Toast.LENGTH_LONG).show();
+                    }
+                });
             } catch (IOException ex) {
                 Log.e("API", "Exception during api call", ex);
             }
