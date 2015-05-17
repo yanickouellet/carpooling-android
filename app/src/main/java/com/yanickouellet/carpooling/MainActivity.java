@@ -1,5 +1,6 @@
 package com.yanickouellet.carpooling;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -186,6 +187,11 @@ public class MainActivity extends RoboActionBarActivity implements
                 break;
             case 4:
                 loadOfferListFragment();
+                break;
+            case 5:
+                AppConstants.setCredential(null);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
 

@@ -56,6 +56,7 @@
         <item>Liste des demandes</item>
         <item>Proposer un parcours</item>
         <item>Liste des offres</item>
+        <item>Déconnexion</item>
     </string-array>
 
 </resources>

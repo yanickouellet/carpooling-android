@@ -45,14 +45,6 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends RoboActivity {
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-
     private static final int ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION = 2222;
 
     /**
