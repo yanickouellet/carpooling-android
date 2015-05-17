@@ -10,6 +10,7 @@ import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.repackaged.com.google.common.base.Strings;
 
@@ -60,6 +63,14 @@ public class LoginActivity extends RoboActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences settings = getSharedPreferences("Carpooling", 0);
+        String accountName = settings.getString(AppConstants.PREF_ACCOUNT_NAME_KEY, null);
+
+        if (accountName != null) {
+            performAuthCheck(accountName);
+        }
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,16 +125,6 @@ public class LoginActivity extends RoboActivity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
 
     /**
@@ -186,6 +187,10 @@ public class LoginActivity extends RoboActivity {
                 credential.setSelectedAccountName(emailAccount);
 
                 String accessToken = credential.getToken();
+
+                SharedPreferences.Editor preferences =  getSharedPreferences("Carpooling", 0).edit();
+                preferences.putString(AppConstants.PREF_ACCOUNT_NAME_KEY, emailAccount);
+                preferences.commit();
 
                 AppConstants.setCredential(credential);
 

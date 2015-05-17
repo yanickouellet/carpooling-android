@@ -2,6 +2,7 @@ package com.yanickouellet.carpooling.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.yanickouellet.carpooling.R;
 
 import roboguice.fragment.RoboFragment;
+import roboguice.inject.InjectView;
 
 public class ProfileFragment extends RoboFragment {
     private OnFragmentListener mListener;

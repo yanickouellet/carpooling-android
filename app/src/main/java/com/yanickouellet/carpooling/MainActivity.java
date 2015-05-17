@@ -1,6 +1,7 @@
 package com.yanickouellet.carpooling;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -190,6 +191,9 @@ public class MainActivity extends RoboActionBarActivity implements
                 break;
             case 5:
                 AppConstants.setCredential(null);
+                SharedPreferences.Editor preferences =  getSharedPreferences("Carpooling", 0).edit();
+                preferences.putString(AppConstants.PREF_ACCOUNT_NAME_KEY, null);
+                preferences.commit();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;

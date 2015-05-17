@@ -21,6 +21,7 @@ public class AppConstants {
 
     public static final String WEB_CLIENT_ID = "167365633595-uqt0ar2ft41ppjto2ce0kpvfdnnqglp8.apps.googleusercontent.com";
     public static final String AUDIENCE = "server:client_id:" + WEB_CLIENT_ID;
+    public static final String PREF_ACCOUNT_NAME_KEY = "ACCOUNT_NAME";
     public static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static GoogleAccountCredential googleCredential = null;
 
