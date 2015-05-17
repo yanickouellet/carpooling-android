@@ -43,6 +43,12 @@
     <string name="state">Places occupées</string>
     <string name="matched">Correspondance trouvée?</string>
     <string name="match_found">Comblé</string>
+    <string name="no_google_account">Vous devez être connecté à un compte Google pour accéder à l\'application</string>
+    <string name="select_account">Sélectionnez ;e compte que vous voulez utiliser</string>
+    <string name="google_service_unavailable">Google Service n\'est pas disponible.</string>
+    <string name="no_account_selected">Aucun compte sélecitonné</string>
+    <string name="authentication_error">Un problème est survenue durant l\'authentification</string>
+    <string name="toast_authentication_error">Un problème est survenu lors de la connexion.</string>
 
     <string-array name="app_menu">
         <item>Profil</item>

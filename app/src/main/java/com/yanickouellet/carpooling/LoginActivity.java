@@ -1,5 +1,6 @@
 package com.yanickouellet.carpooling;
 
+import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -17,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +28,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +52,14 @@ public class LoginActivity extends RoboActivity {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+
+    private static final int ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION = 2222;
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
 
-    private @InjectView(R.id.email) AutoCompleteTextView mEmailView;
-    private @InjectView(R.id.password) EditText mPasswordView;
     private @InjectView(R.id.email_sign_in_button) Button mEmailSignInButton;
     private @InjectView(R.id.login_progress) View mProgressView;
     private @InjectView(R.id.login_form) View mLoginFormView;
@@ -58,17 +67,6 @@ public class LoginActivity extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -78,57 +76,45 @@ public class LoginActivity extends RoboActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION && resultCode == RESULT_OK) {
+            String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            performAuthCheck(accountName);
+        }
+    }
+
+    public void performAuthCheck(String emailAccount) {
+        if(mAuthTask != null) {
+            try {
+                mAuthTask.cancel(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        mAuthTask = new UserLoginTask();
+        mAuthTask.execute(emailAccount);
+        showProgress(true);
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-        cancel = false;
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
+        int accountCount = AppConstants.countGoogleAccounts(this);
+        if (accountCount == 0) {
+            Toast.makeText(this, getString(R.string.no_google_account), Toast.LENGTH_LONG).show();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            Intent accountSelector = AccountPicker.newChooseAccountIntent(null, null,
+                    new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false,
+                    getString(R.string.select_account), null, null, null);
+            startActivityForResult(accountSelector, ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION);
         }
     }
 
@@ -188,39 +174,35 @@ public class LoginActivity extends RoboActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
+    public class UserLoginTask extends AsyncTask<String, Integer, Boolean> {
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+        protected Boolean doInBackground(String... emailAccounts) {
+            if(!AppConstants.checkGooglePlayServicesAvailable(LoginActivity.this)) {
                 return false;
             }
 
-            /*
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-            */
+            String emailAccount = emailAccounts[0];
+            mAuthTask = this;
 
-            // TODO: register the new account here.
-            return true;
+            if (Strings.isNullOrEmpty(emailAccount)) {
+                publishProgress(R.string.no_account_selected);
+                return false;
+            }
+
+            try {
+                GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(LoginActivity.this, AppConstants.AUDIENCE);
+                credential.setSelectedAccountName(emailAccount);
+
+                String accessToken = credential.getToken();
+
+                AppConstants.setCredential(credential);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                publishProgress(R.string.authentication_error);
+                return false;
+            }
         }
 
         @Override
@@ -231,8 +213,7 @@ public class LoginActivity extends RoboActivity {
             if (success) {
                 LoginSucceed();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                Toast.makeText(LoginActivity.this, getString(R.string.toast_authentication_error), Toast.LENGTH_LONG).show();
             }
         }
 
