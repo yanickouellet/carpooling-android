@@ -49,6 +49,7 @@
     <string name="no_account_selected">Aucun compte sélecitonné</string>
     <string name="authentication_error">Un problème est survenue durant l\'authentification</string>
     <string name="toast_authentication_error">Un problème est survenu lors de la connexion.</string>
+    <string name="passengers">Passagers</string>
 
     <string-array name="app_menu">
         <item>Profil</item>

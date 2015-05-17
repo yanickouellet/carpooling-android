@@ -12,6 +12,7 @@ import com.yanickouellet.carpooling.presenters.DatePresenter;
 import none.carpooling.model.RunOffer;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
+import roboguice.util.Strings;
 
 public class OfferDetailFragment extends RoboFragment {
 
@@ -24,6 +25,7 @@ public class OfferDetailFragment extends RoboFragment {
     private @InjectView(R.id.offer_detail_is_ponctual) TextView mIsPonctual;
     private @InjectView(R.id.offer_detail_date) TextView mDate;
     private @InjectView(R.id.offer_detail_state) TextView mState;
+    private @InjectView(R.id.offer_detail_passenger) TextView mPassengers;
 
     public OfferDetailFragment() {
     }
@@ -48,5 +50,6 @@ public class OfferDetailFragment extends RoboFragment {
         mIsPonctual.setText(mOffer.getPonctual() ? R.string.yes : R.string.no);
         mDate.setText(DatePresenter.presentOfferDate(mOffer, getActivity()));
         mState.setText(Long.toString(mOffer.getPlaces() - mOffer.getRemainingPlaces()) + " / " + mOffer.getPlaces().toString());
+        mPassengers.setText(Strings.join("\n", mOffer.getPassengers()));
     }
 }

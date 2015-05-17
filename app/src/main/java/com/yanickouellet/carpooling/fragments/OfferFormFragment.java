@@ -149,7 +149,7 @@ public class OfferFormFragment extends RoboFragment implements
             Toast.makeText(getActivity(), R.string.date_required, Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if(mCurrentOffer.getHour() == 0 && mCurrentOffer.getMinute() == 0) {
+        if(mCurrentOffer.getHour() == null || mCurrentOffer.getMinute() == null) {
             Toast.makeText(getActivity(), R.string.time_required, Toast.LENGTH_LONG).show();
             valid = false;
         }

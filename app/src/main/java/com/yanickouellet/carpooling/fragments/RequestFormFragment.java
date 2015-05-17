@@ -136,7 +136,7 @@ public class RequestFormFragment extends RoboFragment implements
             Toast.makeText(getActivity(), R.string.date_required, Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if(mCurrentRequest.getHour() == 0 && mCurrentRequest.getMinute() == 0) {
+        if(mCurrentRequest.getHour() == null || mCurrentRequest.getMinute() == null) {
             Toast.makeText(getActivity(), R.string.time_required, Toast.LENGTH_LONG).show();
             valid = false;
         }

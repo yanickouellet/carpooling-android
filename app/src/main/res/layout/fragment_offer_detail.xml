@@ -54,4 +54,11 @@
     <TextView android:id="@+id/offer_detail_state" style="@style/DetailTextView.Value"
         android:layout_width="wrap_content" android:layout_height="wrap_content"  />
 
+    <TextView android:id="@+id/offer_detail_lbl_passenger" style="@style/DetailTextView"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/passengers" />
+
+    <TextView android:id="@+id/offer_detail_passenger" style="@style/DetailTextView.Value"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"  />
+
 </LinearLayout>
