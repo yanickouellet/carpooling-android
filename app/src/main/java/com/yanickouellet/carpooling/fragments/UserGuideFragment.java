@@ -12,10 +12,10 @@ import com.yanickouellet.carpooling.R;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
-public class ProfileFragment extends RoboFragment {
+public class UserGuideFragment extends RoboFragment {
     private OnFragmentListener mListener;
 
-    public ProfileFragment() {
+    public UserGuideFragment() {
 
     }
 
@@ -28,7 +28,7 @@ public class ProfileFragment extends RoboFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activity.setTitle(getString(R.string.profile_title));
+        activity.setTitle(getString(R.string.user_guide_title));
         try {
             mListener = (OnFragmentListener) activity;
         } catch (ClassCastException e) {

@@ -1,0 +1,109 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.yanickouellet.carpooling.fragments.OfferDetailFragment"
+        android:orientation="vertical"
+        android:padding="@dimen/application_padding">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_from_address" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/from_address" />
+
+            <TextView android:id="@+id/offer_detail_from_address" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_to_address" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/to_address" />
+
+            <TextView android:id="@+id/offer_detail_to_address" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_places" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/places" />
+
+            <TextView android:id="@+id/offer_detail_places" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_km_value" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/km_value" />
+
+            <TextView android:id="@+id/offer_detail_km_value" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_is_ponctual" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/is_ponctual" />
+
+            <TextView android:id="@+id/offer_detail_is_ponctual" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_date" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/carpooling_moment" />
+
+            <TextView android:id="@+id/offer_detail_date" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end"  />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_state" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/state" />
+
+            <TextView android:id="@+id/offer_detail_state" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView android:id="@+id/offer_detail_lbl_passenger" style="@style/DetailTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/passengers" />
+
+            <TextView android:id="@+id/offer_detail_passenger" style="@style/DetailTextView.Value"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="end" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

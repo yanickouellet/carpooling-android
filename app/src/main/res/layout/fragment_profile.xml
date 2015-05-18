@@ -1,6 +1,27 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="4dip"
-    android:gravity="center_horizontal"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:padding="4dip"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
 
-</LinearLayout>
+        <TextView android:id="@+id/lbl_guide_intro" style="@style/DetailTextView.Value"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/guide_intro" />
+
+        <TextView android:id="@+id/lbl_guide_requests" style="@style/DetailTextView.Value"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/guide_requests" />
+
+        <TextView android:id="@+id/lbl_guide_list" style="@style/DetailTextView.Value"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/guide_list" />
+
+        <TextView android:id="@+id/lbl_guide_logout" style="@style/DetailTextView.Value"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/guide_logout" />
+    </LinearLayout>
+</ScrollView>

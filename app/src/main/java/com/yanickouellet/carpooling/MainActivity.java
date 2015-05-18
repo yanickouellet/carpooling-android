@@ -1,9 +1,13 @@
 package com.yanickouellet.carpooling;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,9 +18,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.yanickouellet.carpooling.background.PullDataService;
 import com.yanickouellet.carpooling.fragments.OfferDetailFragment;
 import com.yanickouellet.carpooling.fragments.OfferFormFragment;
-import com.yanickouellet.carpooling.fragments.ProfileFragment;
+import com.yanickouellet.carpooling.fragments.UserGuideFragment;
 import com.yanickouellet.carpooling.fragments.RequestDetailFragment;
 import com.yanickouellet.carpooling.fragments.RequestFormFragment;
 import com.yanickouellet.carpooling.fragments.RunOfferListFragment;
@@ -33,7 +38,7 @@ import roboguice.inject.InjectView;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends RoboActionBarActivity implements
-        ProfileFragment.OnFragmentListener,
+        UserGuideFragment.OnFragmentListener,
         RequestFormFragment.OnFragmentListener,
         OfferFormFragment.OnFragmentListener,
         RunRequestListFragment.OnFragmentListener,
@@ -70,6 +75,16 @@ public class MainActivity extends RoboActionBarActivity implements
         if (savedInstanceState == null) {
             loadProfileFragment();
         }
+
+        Intent serviceIntent = new Intent(this, PullDataService.class);
+        PendingIntent alarmIntent = PendingIntent.getService(this, 0, serviceIntent, 0);
+        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(),
+                30 * 60 * 1000, // Repeat every 30 minutes
+                alarmIntent);
+
+        PullDataService.startActionDownload(this);
     }
 
     @Override
@@ -107,7 +122,7 @@ public class MainActivity extends RoboActionBarActivity implements
     }
 
     private void loadProfileFragment() {
-        loadFragment(new ProfileFragment());
+        loadFragment(new UserGuideFragment());
         mDrawerList.setItemChecked(0, true);
         setTitle(getString(R.string.profile_title));
     }

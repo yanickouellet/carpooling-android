@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Carpooling</string>
+    <string name="app_name">Covoiturage - Yanick Ouellet</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">Covoiturage - Yanick Ouellet</string>
     <string name="profile_address">Adresse</string>
     <string name="profile_phone">No de téléphone</string>
     <string name="save">Sauvegarder</string>
     <string name="profile_name">Nom</string>
-    <string name="profile_title">Profil</string>
+    <string name="profile_title">Guide utilisatuer</string>
     <string name="drawer_open">Menu ouvert</string>
     <string name="drawer_close">Menu fermé</string>
     <string name="from_address">Adresse de départ</string>
@@ -42,18 +41,44 @@
     <string name="invalid_address">Une des adresse est invalide</string>
     <string name="state">Places occupées</string>
     <string name="matched">Correspondance trouvée?</string>
-    <string name="match_found">Comblé</string>
+    <string name="match_found">Comblée</string>
     <string name="no_google_account">Vous devez être connecté à un compte Google pour accéder à l\'application</string>
-    <string name="select_account">Sélectionnez ;e compte que vous voulez utiliser</string>
+    <string name="select_account">Sélectionnez le compte que vous voulez utiliser</string>
     <string name="google_service_unavailable">Google Service n\'est pas disponible.</string>
     <string name="no_account_selected">Aucun compte sélecitonné</string>
     <string name="authentication_error">Un problème est survenue durant l\'authentification</string>
     <string name="toast_authentication_error">Un problème est survenu lors de la connexion.</string>
     <string name="passengers">Passagers</string>
     <string name="network_unreachable">Impossible d\'accéder au réseau</string>
+    <string name="user_guide_title">Guide utilisateur</string>
+    <string name="guide_intro">
+        Bienvenue sur l\'application de covoiturage. Ce guide vous expliquera brièvement comment utiliser l\'application.
+        Avec cette application, vous pouvez faire des requêtes de covoiturage ainsi que proposer des offres de covoiturage.
+        L\'application vous jumèlera automatiquement avec un conducteur / passager selon votre destination. Le menu de
+        gauche vous permet de naviguer dans l\'application.
+    </string>
+    <string name="guide_requests">
+        Pour commencer, vous voudrez sûrement faire une demande de covoiturage (ou proposer une offre). Pour ce faire,
+        sélectionnez l\'option appropriée dans le menu. Choisissez ensuite l\'addresse de départ et l\'addresse de distination,
+        ainsi que le moment du covoiturage. Notez que les conducteurs ont deux options supplémentaires: le nombre de passagers
+        maximum, ainsi que la valeur de covoiturage, qui représente la distance maximale que le chauffeur est prêt à
+        parcourir pour accomoder ses usagers.
+    </string>
+    <string name="guide_list">
+        Vous pouvez consulter vos requêtes / offres en cours en allant dans les pages de listes. Cliquez ensuite
+        sur la requête / l\'offre pour voir les détails, ainsi que les passagers ou le chauffeur qui vous
+        a été assigné, le cas échant. Notez que les listes sont disponibles hors-connexion et qu\'elles
+        sont mises-à-jour automatiquement, sans avoir besoin d\'être sur l\'application. Cela vous permet
+        de les consulter sans avoir accès à Internet.
+    </string>
+    <string name="guide_logout">
+        Pour vous déconnecter, il suffit de sélectionner l\'option dans le menu. Notez que vous pouvez
+        être connectés sur plusieurs appareils simultanéments.
+    </string>
+    <string name="driver">Chauffeur</string>
 
     <string-array name="app_menu">
-        <item>Profil</item>
+        <item>Guide utilisateur</item>
         <item>Faire une demande</item>
         <item>Liste des demandes</item>
         <item>Proposer un parcours</item>

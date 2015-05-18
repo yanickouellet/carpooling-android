@@ -118,6 +118,7 @@ public class RunRequestListFragment extends RoboFragment implements AbsListView.
         @Override
         protected void onPostExecute(RunRequestCollection runRequestCollection) {
             if (runRequestCollection != null && runRequestCollection.getItems() != null) {
+                mRequests.clear();
                 mRequests.addAll(runRequestCollection.getItems());
                 mAdapter.notifyDataSetChanged();
 
